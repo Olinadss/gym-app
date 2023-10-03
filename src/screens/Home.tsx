@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Group } from '@components/Group'
 import { HomeHeader } from '@components/HomeHeader'
 import { VStack, HStack, FlatList, Heading, Text} from 'native-base'
+import { ExerciseCard } from '@components/ExerciseCard'
 
 export function Home() {
   const [groupSelected, setGroupSelected] = useState('costa')
@@ -36,8 +37,9 @@ export function Home() {
             4
           </Text>
         </HStack>
+        <ExerciseCard />
+        <ExerciseCard />
       </VStack>
-
     </VStack>
   )
 }
