@@ -5,7 +5,7 @@ import { VStack, HStack, FlatList, Heading, Text} from 'native-base'
 import { ExerciseCard } from '@components/ExerciseCard'
 
 export function Home() {
-  const [groupSelected, setGroupSelected] = useState('costa')
+  const [groupSelected, setGroupSelected] = useState('costas')
   const [groups, setGroups] = useState(['Costas', 'Bíceps', 'Tríceps', 'ombro'])
   const [exercises, setExercises] = useState(['Puxada frontal', 'Remada curvada', 'Remada unilateral', 'Levantamento terra'])
 
@@ -18,7 +18,7 @@ export function Home() {
         keyExtractor={item => item}
         renderItem={({ item }) => (
           <Group 
-            isActive={groupSelected === item}
+            isActive={groupSelected.toUpperCase() === item.toUpperCase()}
             name={item}
             onPress={() => setGroupSelected(item)}
           />
