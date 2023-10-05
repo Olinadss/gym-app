@@ -1,5 +1,4 @@
 import { VStack, Image, Text, Center, Heading, ScrollView } from 'native-base'
-
 import LogoSvg from '@assets/logo.svg'
 import BackgroundImg from '@assets/background.png'
 import { Input } from '@components/Input'
@@ -7,15 +6,8 @@ import { Button } from '@components/Button'
 import { useNavigation } from '@react-navigation/native'
 import { useForm, Controller } from 'react-hook-form'
 
-type FormDataProps = {
-	name: string
-	email: string
-	password: string
-	password_confirm: string
-}
-
 export function SingUp() {
-	const { control, handleSubmit } = useForm<FormDataProps>()
+	const { control, handleSubmit } = useForm()
 
 	const navigation = useNavigation()
 
@@ -23,7 +15,7 @@ export function SingUp() {
 		navigation.goBack()
 	}
 
-	function handleSignUp(data: FormDataProps) {
+	function handleSignUp(data: any) {
 		console.log(data)
 	}
 
