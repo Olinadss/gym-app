@@ -2,7 +2,7 @@ import { Button } from '@components/Button'
 import { Input } from '@components/Input'
 import { ScreenHeader } from '@components/ScreenHeader'
 import { UserPhoto } from '@components/UserPhoto'
-import { Center, VStack, Skeleton, Text, Heading } from 'native-base'
+import { Center, VStack, Skeleton, Text, Heading, useToast } from 'native-base'
 import { useState } from 'react'
 import { ScrollView, TouchableOpacity, Alert } from 'react-native'
 import * as ImagePicker from 'expo-image-picker'
@@ -13,6 +13,8 @@ const PHOTO_SIZE = 33
 export function Profile() {
 	const [photoIsLoading, setPhotoIsLoading] = useState(false)
 	const [userPhoto, setUserPhoto] = useState('https://github.com/olinadss.png')
+
+	const toast = useToast()
 
 	async function handleSelectImage() {
 		setPhotoIsLoading(true)
@@ -30,11 +32,13 @@ export function Profile() {
 				const photoInfo = await FileSystem.getInfoAsync(
 					photoSelected.assets[0].uri,
 				)
-				if (photoInfo.exists && photoInfo.size / 1024 / 1024 > 5) {
-					return Alert.alert(
-						'Imagem muito grande',
-						'A imagem deve ter no máximo 5MB',
-					)
+
+				if (photoInfo.exists && photoInfo.size / 1024 / 1024 > 3) {
+					return toast.show({
+						title: 'Imagem muito grande! A imagem deve ter no máximo 5MB',
+						placement: 'top',
+						bgColor: 'red.500',
+					})
 				}
 				setUserPhoto(photoSelected.assets[0].uri)
 			}
