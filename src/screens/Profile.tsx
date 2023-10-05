@@ -21,7 +21,7 @@ export function Profile() {
 		try {
 			const photoSelected = await ImagePicker.launchImageLibraryAsync({
 				mediaTypes: ImagePicker.MediaTypeOptions.Images,
-				quality: 0.5,
+				quality: 1,
 				aspect: [4, 4],
 				allowsEditing: true,
 			})
@@ -35,7 +35,7 @@ export function Profile() {
 
 				if (photoInfo.exists && photoInfo.size / 1024 / 1024 > 3) {
 					return toast.show({
-						title: 'Imagem muito grande! A imagem deve ter no máximo 5MB',
+						title: 'Imagem muito grande! A imagem deve ter no máximo 3MB',
 						placement: 'top',
 						bgColor: 'red.500',
 					})
