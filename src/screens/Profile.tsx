@@ -4,9 +4,10 @@ import { ScreenHeader } from '@components/ScreenHeader'
 import { UserPhoto } from '@components/UserPhoto'
 import { Center, VStack, Skeleton, Text, Heading, useToast } from 'native-base'
 import { useState } from 'react'
-import { ScrollView, TouchableOpacity, Alert } from 'react-native'
+import { ScrollView, TouchableOpacity } from 'react-native'
 import * as ImagePicker from 'expo-image-picker'
 import * as FileSystem from 'expo-file-system'
+import { useForm, Controller } from 'react-hook-form'
 
 const PHOTO_SIZE = 33
 
