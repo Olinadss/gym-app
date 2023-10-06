@@ -63,12 +63,15 @@ export function SingUp() {
 					<Controller
 						control={control}
 						name='name'
-						rules={{ required: 'Nome é obrigatório' }}
 						render={({ field: { onChange, value } }) => (
-							<Input placeholder='Nome' onChangeText={onChange} value={value} />
+							<Input
+								placeholder='Nome'
+								onChangeText={onChange}
+								value={value}
+								errorMessage={errors.name?.message}
+							/>
 						)}
 					/>
-					<Text color={'white'}>{errors.name?.message}</Text>
 
 					<Controller
 						control={control}
@@ -80,6 +83,7 @@ export function SingUp() {
 								autoCapitalize='none'
 								onChangeText={onChange}
 								value={value}
+								errorMessage={errors.email?.message}
 							/>
 						)}
 					/>
@@ -92,6 +96,7 @@ export function SingUp() {
 								secureTextEntry
 								onChangeText={onChange}
 								value={value}
+								errorMessage={errors.password?.message}
 							/>
 						)}
 					/>
@@ -106,6 +111,7 @@ export function SingUp() {
 								onChangeText={onChange}
 								value={value}
 								onSubmitEditing={handleSubmit(handleSignUp)}
+								errorMessage={errors.password_confirm?.message}
 							/>
 						)}
 					/>

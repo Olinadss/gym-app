@@ -7,7 +7,6 @@ import { useState } from 'react'
 import { ScrollView, TouchableOpacity } from 'react-native'
 import * as ImagePicker from 'expo-image-picker'
 import * as FileSystem from 'expo-file-system'
-import { useForm, Controller } from 'react-hook-form'
 
 const PHOTO_SIZE = 33
 
