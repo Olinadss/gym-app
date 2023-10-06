@@ -4,7 +4,7 @@ import { ScreenHeader } from '@components/ScreenHeader'
 import { UserPhoto } from '@components/UserPhoto'
 import { Center, VStack, Skeleton, Text, Heading, useToast } from 'native-base'
 import { useState } from 'react'
-import { ScrollView, TouchableOpacity, Alert } from 'react-native'
+import { ScrollView, TouchableOpacity } from 'react-native'
 import * as ImagePicker from 'expo-image-picker'
 import * as FileSystem from 'expo-file-system'
 
@@ -21,7 +21,7 @@ export function Profile() {
 		try {
 			const photoSelected = await ImagePicker.launchImageLibraryAsync({
 				mediaTypes: ImagePicker.MediaTypeOptions.Images,
-				quality: 0.5,
+				quality: 1,
 				aspect: [4, 4],
 				allowsEditing: true,
 			})
@@ -35,7 +35,7 @@ export function Profile() {
 
 				if (photoInfo.exists && photoInfo.size / 1024 / 1024 > 3) {
 					return toast.show({
-						title: 'Imagem muito grande! A imagem deve ter no máximo 5MB',
+						title: 'Imagem muito grande! A imagem deve ter no máximo 3MB',
 						placement: 'top',
 						bgColor: 'red.500',
 					})
@@ -94,6 +94,7 @@ export function Profile() {
 						mb={2}
 						alignSelf={'flex-start'}
 						mt={12}
+						fontFamily={'heading'}
 					>
 						Alterar senha
 					</Heading>
