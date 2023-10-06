@@ -6,6 +6,8 @@ import { Input } from '@components/Input'
 import { Button } from '@components/Button'
 import { useNavigation } from '@react-navigation/native'
 import { useForm, Controller } from 'react-hook-form'
+import * as yup from 'yup'
+import { yupResolver } from '@hookform/resolvers/yup'
 
 type FormDataProps = {
 	name: string
@@ -14,12 +16,27 @@ type FormDataProps = {
 	password_confirm: string
 }
 
+const signUpSchema = yup.object({
+	name: yup.string().required('Informe o nome.'),
+	email: yup.string().required('Informe o email.').email('E-mail inválido.'),
+	password: yup
+		.string()
+		.required('Informe a senha.')
+		.min(6, 'A senha deve ter pelo menos dígitos.'),
+	password_confirm: yup
+		.string()
+		.required('Confirme sua senha.')
+		.oneOf([yup.ref('password')], 'A confirmação da senha nao confere'),
+})
+
 export function SingUp() {
 	const {
 		control,
 		handleSubmit,
 		formState: { errors },
-	} = useForm<FormDataProps>()
+	} = useForm<FormDataProps>({
+		resolver: yupResolver(signUpSchema),
+	})
 
 	const navigation = useNavigation()
 
@@ -124,7 +141,7 @@ export function SingUp() {
 				<Button
 					title='Voltar para login'
 					variant={'outline'}
-					mt={24}
+					mt={12}
 					onPress={handleGoBack}
 				/>
 			</VStack>
