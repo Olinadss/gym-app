@@ -1,42 +1,13 @@
 import { VStack, Image, Text, Center, Heading, ScrollView } from 'native-base'
-
 import LogoSvg from '@assets/logo.svg'
 import BackgroundImg from '@assets/background.png'
 import { Input } from '@components/Input'
 import { Button } from '@components/Button'
 import { useNavigation } from '@react-navigation/native'
 import { useForm, Controller } from 'react-hook-form'
-import * as yup from 'yup'
-import { yupResolver } from '@hookform/resolvers/yup'
-
-type FormDataProps = {
-	name: string
-	email: string
-	password: string
-	password_confirm: string
-}
-
-const signUpSchema = yup.object({
-	name: yup.string().required('Informe o nome.'),
-	email: yup.string().required('Informe o email.').email('E-mail inválido.'),
-	password: yup
-		.string()
-		.required('Informe a senha.')
-		.min(6, 'A senha deve ter pelo menos dígitos.'),
-	password_confirm: yup
-		.string()
-		.required('Confirme sua senha.')
-		.oneOf([yup.ref('password')], 'A confirmação da senha nao confere'),
-})
 
 export function SingUp() {
-	const {
-		control,
-		handleSubmit,
-		formState: { errors },
-	} = useForm<FormDataProps>({
-		resolver: yupResolver(signUpSchema),
-	})
+	const { control, handleSubmit } = useForm()
 
 	const navigation = useNavigation()
 
@@ -44,7 +15,7 @@ export function SingUp() {
 		navigation.goBack()
 	}
 
-	function handleSignUp(data: FormDataProps) {
+	function handleSignUp(data: any) {
 		console.log(data)
 	}
 
@@ -81,15 +52,9 @@ export function SingUp() {
 						control={control}
 						name='name'
 						render={({ field: { onChange, value } }) => (
-							<Input
-								placeholder='Nome'
-								onChangeText={onChange}
-								value={value}
-								errorMessage={errors.name?.message}
-							/>
+							<Input placeholder='Nome' onChangeText={onChange} value={value} />
 						)}
 					/>
-
 					<Controller
 						control={control}
 						name='email'
@@ -100,10 +65,10 @@ export function SingUp() {
 								autoCapitalize='none'
 								onChangeText={onChange}
 								value={value}
-								errorMessage={errors.email?.message}
 							/>
 						)}
 					/>
+
 					<Controller
 						control={control}
 						name='password'
@@ -113,11 +78,9 @@ export function SingUp() {
 								secureTextEntry
 								onChangeText={onChange}
 								value={value}
-								errorMessage={errors.password?.message}
 							/>
 						)}
 					/>
-
 					<Controller
 						control={control}
 						name='password_confirm'
@@ -128,7 +91,6 @@ export function SingUp() {
 								onChangeText={onChange}
 								value={value}
 								onSubmitEditing={handleSubmit(handleSignUp)}
-								errorMessage={errors.password_confirm?.message}
 							/>
 						)}
 					/>
@@ -141,7 +103,7 @@ export function SingUp() {
 				<Button
 					title='Voltar para login'
 					variant={'outline'}
-					mt={12}
+					mt={24}
 					onPress={handleGoBack}
 				/>
 			</VStack>
