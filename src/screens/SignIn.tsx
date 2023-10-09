@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { useNavigation } from '@react-navigation/native'
 
 import {
@@ -28,6 +29,7 @@ type FormData = {
 }
 
 export function SingIn() {
+	const [isLoading, setIsLoading] = useState(false)
 	const { signIn } = useAuth()
 	const toast = useToast()
 
@@ -45,6 +47,7 @@ export function SingIn() {
 
 	async function handleSignIn({ email, password }: FormData) {
 		try {
+			setIsLoading(true)
 			await signIn(email, password)
 		} catch (error) {
 			const isAppError = error instanceof AppError
@@ -52,6 +55,8 @@ export function SingIn() {
 			const title = isAppError
 				? error.message
 				: 'Não foi possível entrar tente novamente mais tarde.'
+
+			setIsLoading(false)
 
 			toast.show({
 				title,
@@ -118,7 +123,11 @@ export function SingIn() {
 						)}
 					/>
 
-					<Button title='Acessar' onPress={handleSubmit(handleSignIn)} />
+					<Button
+						title='Acessar'
+						onPress={handleSubmit(handleSignIn)}
+						isLoading={isLoading}
+					/>
 				</Center>
 
 				<Center mt={24}>
