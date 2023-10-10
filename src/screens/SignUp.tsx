@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { api } from '@services/api'
 import {
 	VStack,
@@ -11,6 +12,7 @@ import {
 import { Input } from '@components/Input'
 import { Button } from '@components/Button'
 import { useNavigation } from '@react-navigation/native'
+import { useAuth } from '@hooks/useAuth'
 
 import { AppError } from '@utils/AppError'
 
@@ -42,7 +44,9 @@ const signUpSchema = yup.object({
 })
 
 export function SingUp() {
+	const [isLoading, setIsLoading] = useState(false)
 	const toast = useToast()
+	const { signIn } = useAuth()
 
 	const {
 		control,
@@ -60,9 +64,11 @@ export function SingUp() {
 
 	async function handleSignUp({ name, email, password }: FormDataProps) {
 		try {
-			const response = await api.post('/users', { name, email, password })
-			console.log(response.status)
+			setIsLoading(true)
+			await api.post('/users', { name, email, password })
+			await signIn(email, password)
 		} catch (error) {
+			setIsLoading(false)
 			const isAppError = error instanceof AppError
 			const title = isAppError
 				? error.message
@@ -74,6 +80,8 @@ export function SingUp() {
 					bgColor: 'red.500',
 				})
 			}
+		} finally {
+			setIsLoading(false)
 		}
 	}
 
@@ -164,6 +172,7 @@ export function SingUp() {
 					<Button
 						title='Criar e acessar'
 						onPress={handleSubmit(handleSignUp)}
+						isLoading={isLoading}
 					/>
 				</Center>
 
