@@ -67,6 +67,12 @@ export function Exercise() {
 		try {
 			setSendingRegister(true)
 			await api.post('/history', { exercise_id: exerciseId })
+			toast.show({
+				title: 'Parabéns! Exercício registrado no seu histórico.',
+				placement: 'top',
+				bgColor: 'green.700',
+			})
+			navigation.navigate('history')
 		} catch (error) {
 			const isAppError = error instanceof AppError
 			const title = isAppError
@@ -74,12 +80,10 @@ export function Exercise() {
 				: 'Não foi possível registrar o exercício'
 
 			toast.show({
-				title: 'Parabéns! Exercício registrado no seu histórico.',
+				title,
 				placement: 'top',
 				bgColor: 'green.700',
 			})
-
-			navigation.navigate('history')
 		} finally {
 			setSendingRegister(false)
 		}
